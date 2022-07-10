@@ -14,7 +14,9 @@ The idea is to let Python perform the high level decisions, while Sqlite does th
 
 * **Node** - A machine, or independent process, that has CPU, memory and disk resources
 * **Cluster** - Many nodes that act as a single warehouse
-* **Shard** - Data is split into shards, which are scattered evenly over the nodes. 
+* **Shard** - Data is split into shards, which are scattered evenly over the nodes.
+* **File** - A shard can be split into many sqlite database files on a single node. 
+* **Database** - same as "file", since sqlite database is a single file
 
 ### Queries
 
@@ -31,7 +33,7 @@ Since query results are Sqlite files, they can be enormous in size.
 
 Data is submitted as Sqlite files. The process of converting from the external format (JSON documents) to the Sqlite representation is called "ingestion". Ingestion can be parallelized easily. If ingestion is provided as client library code, then we can increase the overall ingestion speed of the cluster. 
 
-There is only one shard accepting new records at a time; it is called the ingestion shard. All other shards are "static"
+There is only one file per node accepting new records at a time; it is called the ingestion file. All other files are "static"
 
 * Create database - make a new database, fill it with data
 * submit database to nodes - this should be a simple file transfer
